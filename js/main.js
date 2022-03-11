@@ -516,7 +516,7 @@ $(document).ready(async () => {
       `;
         }
         
-
+        let link = ""
 
         //this is this the edit rider modal
       document.querySelector('.edit-modals-wrapper').innerHTML += `
@@ -529,41 +529,43 @@ $(document).ready(async () => {
                          <span aria-hidden="true">&times;</span> </button>
                 </div>
                 <div class="modal-body">
+                <img style="width:10%;" class="img-profile rounded-circle"
+                src="${link}">
                     <form class="editRiderForm" id="edit${el.replace('+', '')}">
                         <div>
                             <div id="step">
                             <div class="my-3" href="#step-1">Step 1:  <small>Phone Number</small></div>
-                                <div class="row">
+                                <div>
                                     <div class="col d-flex align-items-center"> +91<input type="text" class="form-control phone-number-input" placeholder="Phone Number" name="phonenumber" value="${allRiders[el].MobileNumber.replace("+91", '')}" required> </div>
                                 </div>
                             </div>
                             <div id="step">
                             <div class="my-3" href="#step-2">Step 2:  <small>Personal Info</small></div>
                                 <div class="row">
-                                    <div class="col-md-6"> <input type="text" class="form-control name-input" placeholder="Name" name="ridername" value="${allRiders[el].name}" required> </div>
-                                    <div class="col-md-6"> <input type="text" class="form-control adhaar-card-number-input" value="${allRiders[el].Aadhar}" name="aadhar" placeholder="Adhaar Card Number" required> </div>
+                                    <div class="col-md-6"> <label>Name:</label> <input type="text" class="form-control name-input" placeholder="Name" name="ridername" value="${allRiders[el].name}" required> </div>
+                                    <div class="col-md-6"> <label>Aadhar Card Number:</label> <input type="text" class="form-control adhaar-card-number-input" value="${allRiders[el].Aadhar}" name="aadhar" placeholder="Adhaar Card Number" required> </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-6"> <input type="text" class="form-control pan-number-input" value="${allRiders[el].PAN}" name="pan" placeholder="PAN Number" required> </div>
-                                    <div class="col-md-6"> <input type="text" class="form-control vehicle-registration-input" name="vrn" value="${allRiders[el].Vehicle_Registration_Number}" placeholder="Vehicle Registration Number " required> </div>
+                                    <div class="col-md-6"> <label>PAN:</label> <input type="text" class="form-control pan-number-input" value="${allRiders[el].PAN}" name="pan" placeholder="PAN Number" required> </div>
+                                    <div class="col-md-6"> <label>Vehicle Registration Number:</label> <input type="text" class="form-control vehicle-registration-input" name="vrn" value="${allRiders[el].Vehicle_Registration_Number}" placeholder="Vehicle Registration Number " required> </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-6"> <input type="text" class="form-control license-input" value="${allRiders[el].License}" name="lf" placeholder="License Number" required> </div>
-                                    <div class="col-md-6"> <input type="file" class="form-control profile-image-input" name="riderimage" placeholder="Profile Image"> </div>
+                                    <div class="col-md-6"> <label>License:</label> <input type="text" class="form-control license-input" value="${allRiders[el].License}" name="lf" placeholder="License Number" required> </div>
+                                    <div class="col-md-6"> <label>Profile Image:</label> <input type="file" class="form-control profile-image-input" name="riderimage" placeholder="Profile Image"> </div>
                                 </div>
                             </div>
                             <div id="step" class="">
                             <div class="my-3" href="#step-3">Step 3:  <small>Bank Info</small></div>
                                 <div class="row">
-                                    <div class="col-md-6"> <input type="text" class="form-control account-holder-name-input" value="${allRiders[el].BANK? allRiders[el].BANK.Account_Holder_Name: ''}"  placeholder="Account Holder Name" required> </div>
-                                    <div class="col-md-6"> <input type="text" class="form-control account-holder-number-input" value="${allRiders[el].BANK? allRiders[el].BANK.Account_Number: ''}" placeholder="Account Holder Number" required> </div>
+                                    <div class="col-md-6"> <label>Account Name:</label> <input type="text" class="form-control account-holder-name-input" name="ahname" value="${allRiders[el].BANK? allRiders[el].BANK.Account_Holder_Name: ''}"  placeholder="Account Holder Name" > </div>
+                                    <div class="col-md-6"> <label>Account Number:</label> <input type="text" class="form-control account-holder-number-input" name="ahnum" value="${allRiders[el].BANK? allRiders[el].BANK.Account_Number: ''}" placeholder="Account Holder Number" > </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-6"> <input type="text" class="form-control ifsc-code-input" value="${allRiders[el].BANK? allRiders[el].BANK.IFSC_Code: ''}" placeholder="IFSC Code" required> </div>
-                                    <div class="col-md-6"> <input type="text" class="form-control branch-name-input" value="${allRiders[el].BANK? allRiders[el].BANK.Branch_Name: ''}" placeholder="Branch Name" required> </div>
+                                    <div class="col-md-6"> <label>IFSC Code:</label> <input type="text" class="form-control ifsc-code-input" name="ifsccode" value="${allRiders[el].BANK? allRiders[el].BANK.IFSC_Code: ''}" placeholder="IFSC Code" > </div>
+                                    <div class="col-md-6"> <label>Branch Name:</label> <input type="text" class="form-control branch-name-input" name="bn" value="${allRiders[el].BANK? allRiders[el].BANK.Branch_Name: ''}" placeholder="Branch Name" > </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col"> <input type="text" class="form-control upi-id-input" value="${allRiders[el].BANK? allRiders[el].BANK.UPI_ID: ''}" placeholder="UPI ID" required> </div>
+                                    <div class="col"> <label>UPI Id:</label> <input type="text" class="form-control upi-id-input" name="upicode" value="${allRiders[el].BANK? allRiders[el].BANK.UPI_ID: ''}" placeholder="UPI ID" > </div>
                                 </div>
                                 <div class="col-md-12 text-center mt-4" >
                                          <span>
@@ -607,24 +609,46 @@ $(document).ready(async () => {
             e.preventDefault()
             let form = e.target
             showLoader()
-      
             let phoneNumberField = form.phonenumber.value
             let nameField = form.ridername.value
             let adhaarNumberField = form.aadhar.value
             let panNumberField = form.pan.value
             let vehicleRegistrationField = form.vrn.value
             let licenseField = form.lf.value
-            let profileImageField = form.riderimage.value
-            let accountHolderNameField = form.value
-            let accountHolderNumberField = form.value
-            let ifscCodeField = form.value
-            let branchNameField = form.value
-            let upiIdCodeField = form.value
+            let profileImageField = form.riderimage.files[0]
+            let accountHolderNameField = form.ahname.value
+            let accountHolderNumberField = form.ahnum.value
+            let ifscCodeField = form.ifsccode.value
+            let branchNameField = form.bn.value
+            let upiIdCodeField = form.upicode.value
+            let data = {
+                Aadhar : adhaarNumberField,
+                BANK : {
+                  Account_Holder_Name : accountHolderNameField,
+                  Account_Number : accountHolderNumberField,
+                  Branch_Name : branchNameField,
+                  IFSC_Code : ifscCodeField,
+                  UPI_ID : upiIdCodeField
+                },  
+                License : licenseField,
+                MobileNumber : "+91"+phoneNumberField,
+                PAN : panNumberField,
+                Vehicle_Registration_Number : vehicleRegistrationField,
+                name : nameField,
+                status : 'approved'
+              } 
+            if(!profileImageField){
+                console.log('in1')
+                  update(ref(db, "RiderDetails/+91" + phoneNumberField) ,data).then(() =>  {new Toast({
+                    message: 'Rider Edited Successfully',
+                    type: 'success'
+                  })
+                  $('body').loadingModal('destroy');
+            document.querySelector(`.hide-91${phoneNumberField}`).click()
 
-      
-      
-      
-      
+                }).catch((err) => console.log(err));
+                
+            }else{
              const metaData = { contentType : profileImageField.type}
              const ssRef = sRef(getStorage(), `RIDER_DP/+91${phoneNumberField}/${profileImageField.name}`);
              const uploadTask = uploadBytesResumable(ssRef, profileImageField, metaData);
@@ -636,40 +660,28 @@ $(document).ready(async () => {
            }, function() {
             // Uploaded completed successfully, now we can get the download URL
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              set(ref(db, "RIDER_DP/+91" + phoneNumberField) ,{
+              update(ref(db, "RIDER_DP/+91" + phoneNumberField) ,{
                 dp : downloadURL,
                 userid : "+91" + phoneNumberField
               })
             });
       
-            let data = {
-              Aadhar : adhaarNumberField,
-              BANK : {
-                Account_Holder_Name : accountHolderNameField,
-                Account_Number : accountHolderNumberField,
-                Branch_Name : branchNameField,
-                IFSC_Code : ifscCodeField,
-                UPI_ID : upiIdCodeField
-              },  
-              License : licenseField,
-              MobileNumber : "+91"+phoneNumberField,
-              PAN : panNumberField,
-              Vehicle_Registration_Number : vehicleRegistrationField,
-              name : nameField,
-              status : 'approved'
-            } 
-            set(ref(db, "RiderDetails/+91" + phoneNumberField) ,data).then(() =>  {new Toast({
-              message: 'Rider Added Successfully',
+             
+            update(ref(db, "RiderDetails/+91" + phoneNumberField) ,data).then(() =>  {new Toast({
+              message: 'Rider Edited Successfully',
               type: 'success'
             })
-           document.querySelector('#all-riders-div.navigate-now').click()  
+
             $('body').loadingModal('destroy');
+            document.querySelector(`.hide-91${phoneNumberField}`).click()
       
           }).catch((err) => console.log(err));
           });
-           
+        }
         })
-    })
+    
+      })
+
       document.querySelector("#riders-count").innerHTML = `
       ${Object.keys(allRiders).length}
     `;}
