@@ -158,6 +158,7 @@ $(document).ready(async () => {
       document.querySelector("#rejected-riders-body").innerHTML = ""
       document.querySelector('.edit-modals-wrapper').innerHTML = ""
       Object.keys(allRiders).forEach((el) => {
+
         
         if (allRiders[el].status == "approved") {
           approvedDrivers.push(el);
@@ -325,6 +326,9 @@ $(document).ready(async () => {
     <a id="${el}" href="#" class="btn btn-danger btn-circle delete-rider-btn">
         <i id="${el}" class="fas fa-trash delete-rider-btn"></i>
     </a>
+    <a id="${el}" href="#" class="btn btn-primary btn-circle edit-rider-btn" data-toggle="modal" data-target="#editRider${el.replace('+', '')}">
+  <i id="${el}" class="fas fa-pen edit-rider-btn" data-toggle="modal" data-target="#editRider${el.replace('+', '')}"></i>
+</a> 
         
         </td>
     </tr>
@@ -512,37 +516,40 @@ $(document).ready(async () => {
       `;
         }
         
+
+
+        //this is this the edit rider modal
       document.querySelector('.edit-modals-wrapper').innerHTML += `
       <div class="container">
     <div class="modal fade" id="editRider${el.replace('+', '')}" tabindex="-1" role="dialog" aria-labelledby="editRider${el.replace('+', '')}Label" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editRider${el.replace('+', '')}Label">Add A Rider</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title" id="editRider${el.replace('+', '')}Label">Edit Rider</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                          <span aria-hidden="true">&times;</span> </button>
                 </div>
                 <div class="modal-body">
-                    <form id="edit${el.replace('+', '')}">
+                    <form class="editRiderForm" id="edit${el.replace('+', '')}">
                         <div>
                             <div id="step">
                             <div class="my-3" href="#step-1">Step 1:  <small>Phone Number</small></div>
                                 <div class="row">
-                                    <div class="col d-flex align-items-center"> +91<input type="text" class="form-control phone-number-input" placeholder="Phone Number" value="${allRiders[el].MobileNumber.replace("+91", '')}" required> </div>
+                                    <div class="col d-flex align-items-center"> +91<input type="text" class="form-control phone-number-input" placeholder="Phone Number" name="phonenumber" value="${allRiders[el].MobileNumber.replace("+91", '')}" required> </div>
                                 </div>
                             </div>
                             <div id="step">
                             <div class="my-3" href="#step-2">Step 2:  <small>Personal Info</small></div>
                                 <div class="row">
-                                    <div class="col-md-6"> <input type="text" class="form-control name-input" placeholder="Name" value="${allRiders[el].name}" required> </div>
-                                    <div class="col-md-6"> <input type="text" class="form-control adhaar-card-number-input" value="${allRiders[el].Aadhar}" placeholder="Adhaar Card Number" required> </div>
+                                    <div class="col-md-6"> <input type="text" class="form-control name-input" placeholder="Name" name="ridername" value="${allRiders[el].name}" required> </div>
+                                    <div class="col-md-6"> <input type="text" class="form-control adhaar-card-number-input" value="${allRiders[el].Aadhar}" name="aadhar" placeholder="Adhaar Card Number" required> </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-6"> <input type="text" class="form-control pan-number-input" value="${allRiders[el].PAN}" placeholder="PAN Number" required> </div>
-                                    <div class="col-md-6"> <input type="text" class="form-control vehicle-registration-input" value="${allRiders[el].Vehicle_Registration_Number}" placeholder="Vehicle Registration Number " required> </div>
+                                    <div class="col-md-6"> <input type="text" class="form-control pan-number-input" value="${allRiders[el].PAN}" name="pan" placeholder="PAN Number" required> </div>
+                                    <div class="col-md-6"> <input type="text" class="form-control vehicle-registration-input" name="vrn" value="${allRiders[el].Vehicle_Registration_Number}" placeholder="Vehicle Registration Number " required> </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-6"> <input type="text" class="form-control license-input" value="${allRiders[el].License}" placeholder="License Number" required> </div>
-                                    <div class="col-md-6"> <input type="file" class="form-control profile-image-input"  placeholder="Profile Image"> </div>
+                                    <div class="col-md-6"> <input type="text" class="form-control license-input" value="${allRiders[el].License}" name="lf" placeholder="License Number" required> </div>
+                                    <div class="col-md-6"> <input type="file" class="form-control profile-image-input" name="riderimage" placeholder="Profile Image"> </div>
                                 </div>
                             </div>
                             <div id="step" class="">
@@ -578,6 +585,12 @@ $(document).ready(async () => {
         </div>
     </div>
 </div>`
+
+
+
+/*
+    this is for the steps modal if you want thw edit as steps too
+*/
 // $(`#smartwizard${el.replace('+', '')}`).smartWizard({
 //     selected: 0,
 //     theme: 'dots',
@@ -589,11 +602,77 @@ $(document).ready(async () => {
 
       });
 
+      document.querySelectorAll('.editRiderForm').forEach(fr=>{
+        fr.addEventListener('submit', e=>{
+            e.preventDefault()
+            let form = e.target
+            showLoader()
+      
+            let phoneNumberField = form.phonenumber.value
+            let nameField = form.ridername.value
+            let adhaarNumberField = form.aadhar.value
+            let panNumberField = form.pan.value
+            let vehicleRegistrationField = form.vrn.value
+            let licenseField = form.lf.value
+            let profileImageField = form.riderimage.value
+            let accountHolderNameField = form.value
+            let accountHolderNumberField = form.value
+            let ifscCodeField = form.value
+            let branchNameField = form.value
+            let upiIdCodeField = form.value
+
+      
+      
+      
+      
+             const metaData = { contentType : profileImageField.type}
+             const ssRef = sRef(getStorage(), `RIDER_DP/+91${phoneNumberField}/${profileImageField.name}`);
+             const uploadTask = uploadBytesResumable(ssRef, profileImageField, metaData);
+             uploadTask.on('state_changed',function(snapshot) {
+              console.log(snapshot)
+            }, function(error) {
+              console.log(error)
+            
+           }, function() {
+            // Uploaded completed successfully, now we can get the download URL
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              set(ref(db, "RIDER_DP/+91" + phoneNumberField) ,{
+                dp : downloadURL,
+                userid : "+91" + phoneNumberField
+              })
+            });
+      
+            let data = {
+              Aadhar : adhaarNumberField,
+              BANK : {
+                Account_Holder_Name : accountHolderNameField,
+                Account_Number : accountHolderNumberField,
+                Branch_Name : branchNameField,
+                IFSC_Code : ifscCodeField,
+                UPI_ID : upiIdCodeField
+              },  
+              License : licenseField,
+              MobileNumber : "+91"+phoneNumberField,
+              PAN : panNumberField,
+              Vehicle_Registration_Number : vehicleRegistrationField,
+              name : nameField,
+              status : 'approved'
+            } 
+            set(ref(db, "RiderDetails/+91" + phoneNumberField) ,data).then(() =>  {new Toast({
+              message: 'Rider Added Successfully',
+              type: 'success'
+            })
+           document.querySelector('#all-riders-div.navigate-now').click()  
+            $('body').loadingModal('destroy');
+      
+          }).catch((err) => console.log(err));
+          });
+           
+        })
+    })
       document.querySelector("#riders-count").innerHTML = `
       ${Object.keys(allRiders).length}
-    `;
-      //localStorage.setItem('riders', JSON.stringify(allRiders))
-    }
+    `;}
 
 
 
@@ -781,6 +860,9 @@ $(document).ready(async () => {
   <a id="${el}" href="#" class="btn btn-danger btn-circle delete-rider-btn">
       <i id="${el}" class="fas fa-trash delete-rider-btn"></i>
   </a>
+  <a id="${el}" href="#" class="btn btn-primary btn-circle edit-rider-btn" data-toggle="modal" data-target="#editRider${el.replace('+', '')}">
+  <i id="${el}" class="fas fa-pen edit-rider-btn" data-toggle="modal" data-target="#editRider${el.replace('+', '')}"></i>
+</a> 
       
       </td>
   </tr>
@@ -791,6 +873,9 @@ $(document).ready(async () => {
       //localStorage.setItem('shops', JSON.stringify(allShops))
     }
   });
+
+
+
 
   document.addEventListener("click", (e) => {
 
