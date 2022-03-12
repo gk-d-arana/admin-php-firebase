@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container position-absolute">
     <div class="modal fade" id="addShop" tabindex="-1" role="dialog" aria-labelledby="addShopLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">

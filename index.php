@@ -30,8 +30,16 @@
         .hidden{
             display: none;
         }
+        .w-94{
+            width: 94%;
+        }
+
         .mt-200 {
     margin-top: 200px
+}
+.sidebar{
+    position: fixed;
+    z-index: 10;
 }
 .toastjs-container{
     z-index: 200000 !important;
@@ -69,62 +77,63 @@
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Main Content -->
-            <div id="content">
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
+                <!-- Sidebar Toggle (Topbar) -->
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
 
 
 
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                <!-- Topbar Navbar -->
+                <ul class="navbar-nav ml-auto">
 
 
-                        <div class="topbar-divider d-none d-sm-block"></div>
+                    <div class="topbar-divider d-none d-sm-block"></div>
 
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                    <!-- Nav Item - User Information -->
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                            <img class="img-profile rounded-circle"
+                                src="img/undraw_profile.svg">
+                        </a>
+                        <!-- Dropdown - User Information -->
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                            aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Profile
                             </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Settings
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Activity Log
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
 
-                    </ul>
+                </ul>
 
-                </nav>
+            </nav>
+
+            <!-- Main Content -->
+            <div id="content" class=" d-flex justify-content-end">
+
                 <!-- End of Topbar -->
 
-                <div class="home-div hidden">
+                <div class="home-div w-94 hidden">
 
                 <!-- Begin Home Page Content -->
                 <div class="container-fluid">
@@ -154,19 +163,19 @@
                 <!-- All Riders Page -->
 
                
-            <div class="all-riders-div hidden">
+            <div class="all-riders-div w-94 hidden">
 
                 <?php include './components/allriders.php';?>
               
             </div>
 
 
-            <div class="rejected-riders-div hidden">
+            <div class="rejected-riders-div w-94 hidden">
             <?php include './components/rejectedriders.php';?>
                 
             </div>
 
-            <div class="all-orders-div hidden">
+            <div class="all-orders-div hidden w-94">
             <div class="mx-auto row container" id="all-orders-row">
 
             </div>
@@ -176,7 +185,7 @@
             <?php include './components/addrider.php';?>
             <?php include './components/addshop.php';?>
 
-            <div class="edit-modals-wrapper"></div>
+            <div class="edit-modals-wrapper position-absolute"></div>
 
 
             </div>
