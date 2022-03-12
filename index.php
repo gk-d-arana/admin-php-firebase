@@ -167,7 +167,7 @@
             </div>
 
             <div class="all-orders-div hidden">
-            <div class="row" id="all-orders-row">
+            <div class="mx-auto row container" id="all-orders-row">
 
             </div>
                 

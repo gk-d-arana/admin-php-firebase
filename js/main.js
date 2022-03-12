@@ -89,12 +89,14 @@ $(document).ready(async () => {
     let ridersRes = await get(child(dbref, "RiderDetails"));
     let shopsRes = await get(child(dbref, "Shop"));
     let liveRidersRes = await get(child(dbref, "LiveRider"));
+    let riderDpRes = await get(child(dbref, "RIDER_DP"));
 
     let allOrders = "";
     let allRiders = "";
     let allCustomers = "";
     let allShops = "";
     let liveRiders = "";
+    let riderDps = ""
 
     if (ordersRes.exists()) {
       allOrders = ordersRes.val();
@@ -153,6 +155,7 @@ $(document).ready(async () => {
 
     if (ridersRes.exists()) {
       allRiders = ridersRes.val();
+      riderDps = riderDpRes.val()
       let approvedDrivers = [];
       document.querySelector("#all-riders-body").innerHTML = ""
       document.querySelector("#rejected-riders-body").innerHTML = ""
@@ -343,6 +346,85 @@ $(document).ready(async () => {
 
 
         if (el.startsWith("+")) {
+
+            //edit form
+            let link = "img/undraw_profile.svg"
+            if(riderDps[el]){
+               link = riderDps[el].dp
+            }
+
+            //this is this the edit rider modal
+          document.querySelector('.edit-modals-wrapper').innerHTML += `
+          <div class="container">
+        <div class="modal fade" id="editRider${el.replace('+', '')}" tabindex="-1" role="dialog" aria-labelledby="editRider${el.replace('+', '')}Label" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editRider${el.replace('+', '')}Label">Edit Rider</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                             <span aria-hidden="true">&times;</span> </button>
+                    </div>
+                    <div class="modal-body">
+                    <img style="width:10%;" class="img-profile rounded-circle"
+                    src="${link}">
+                        <form class="editRiderForm" id="edit${el.replace('+', '')}">
+                            <div>
+                                <div id="step">
+                                <div class="my-3" href="#step-1">Step 1:  <small>Phone Number</small></div>
+                                    <div>
+                                        <div class="col d-flex align-items-center"> +91<input type="text" class="form-control phone-number-input" placeholder="Phone Number" name="phonenumber" value="${allRiders[el].MobileNumber.replace("+91", '')}" required> </div>
+                                    </div>
+                                </div>
+                                <div id="step">
+                                <div class="my-3" href="#step-2">Step 2:  <small>Personal Info</small></div>
+                                    <div class="row">
+                                        <div class="col-md-6"> <label>Name:</label> <input type="text" class="form-control name-input" placeholder="Name" name="ridername" value="${allRiders[el].name}" required> </div>
+                                        <div class="col-md-6"> <label>Aadhar Card Number:</label> <input type="text" class="form-control adhaar-card-number-input" value="${allRiders[el].Aadhar}" name="aadhar" placeholder="Adhaar Card Number" required> </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-6"> <label>PAN:</label> <input type="text" class="form-control pan-number-input" value="${allRiders[el].PAN}" name="pan" placeholder="PAN Number" required> </div>
+                                        <div class="col-md-6"> <label>Vehicle Registration Number:</label> <input type="text" class="form-control vehicle-registration-input" name="vrn" value="${allRiders[el].Vehicle_Registration_Number}" placeholder="Vehicle Registration Number " required> </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-6"> <label>License:</label> <input type="text" class="form-control license-input" value="${allRiders[el].License}" name="lf" placeholder="License Number" required> </div>
+                                        <div class="col-md-6"> <label>Profile Image:</label> <input type="file" class="form-control profile-image-input" name="riderimage" placeholder="Profile Image"> </div>
+                                    </div>
+                                </div>
+                                <div id="step" class="">
+                                <div class="my-3" href="#step-3">Step 3:  <small>Bank Info</small></div>
+                                    <div class="row">
+                                        <div class="col-md-6"> <label>Account Name:</label> <input type="text" class="form-control account-holder-name-input" name="ahname" value="${allRiders[el].BANK? allRiders[el].BANK.Account_Holder_Name: ''}"  placeholder="Account Holder Name" > </div>
+                                        <div class="col-md-6"> <label>Account Number:</label> <input type="text" class="form-control account-holder-number-input" name="ahnum" value="${allRiders[el].BANK? allRiders[el].BANK.Account_Number: ''}" placeholder="Account Holder Number" > </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-6"> <label>IFSC Code:</label> <input type="text" class="form-control ifsc-code-input" name="ifsccode" value="${allRiders[el].BANK? allRiders[el].BANK.IFSC_Code: ''}" placeholder="IFSC Code" > </div>
+                                        <div class="col-md-6"> <label>Branch Name:</label> <input type="text" class="form-control branch-name-input" name="bn" value="${allRiders[el].BANK? allRiders[el].BANK.Branch_Name: ''}" placeholder="Branch Name" > </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col"> <label>UPI Id:</label> <input type="text" class="form-control upi-id-input" name="upicode" value="${allRiders[el].BANK? allRiders[el].BANK.UPI_ID: ''}" placeholder="UPI ID" > </div>
+                                    </div>
+                                    <div class="col-md-12 text-center mt-4" >
+                                             <span>
+                                        <button type="submit" href="#" class="btn btn-success btn-icon-split">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                            <span class="text">Confirm Editing The Rider</span>
+                                        </button>
+                                        <span  data-dismiss="modal" aria-label="Close" class="hide-${el.replace('+', '')} hidden" >hide</span>
+                                                </span> 
+                                            </div>
+                                </div>
+    
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>`
+
+
+
           let showPersonalDetails = `
       
       <div class="nav-item dropdown no-arrow mx-1 position-static">
@@ -516,77 +598,7 @@ $(document).ready(async () => {
       `;
         }
         
-        let link = ""
-
-        //this is this the edit rider modal
-      document.querySelector('.edit-modals-wrapper').innerHTML += `
-      <div class="container">
-    <div class="modal fade" id="editRider${el.replace('+', '')}" tabindex="-1" role="dialog" aria-labelledby="editRider${el.replace('+', '')}Label" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editRider${el.replace('+', '')}Label">Edit Rider</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                         <span aria-hidden="true">&times;</span> </button>
-                </div>
-                <div class="modal-body">
-                <img style="width:10%;" class="img-profile rounded-circle"
-                src="${link}">
-                    <form class="editRiderForm" id="edit${el.replace('+', '')}">
-                        <div>
-                            <div id="step">
-                            <div class="my-3" href="#step-1">Step 1:  <small>Phone Number</small></div>
-                                <div>
-                                    <div class="col d-flex align-items-center"> +91<input type="text" class="form-control phone-number-input" placeholder="Phone Number" name="phonenumber" value="${allRiders[el].MobileNumber.replace("+91", '')}" required> </div>
-                                </div>
-                            </div>
-                            <div id="step">
-                            <div class="my-3" href="#step-2">Step 2:  <small>Personal Info</small></div>
-                                <div class="row">
-                                    <div class="col-md-6"> <label>Name:</label> <input type="text" class="form-control name-input" placeholder="Name" name="ridername" value="${allRiders[el].name}" required> </div>
-                                    <div class="col-md-6"> <label>Aadhar Card Number:</label> <input type="text" class="form-control adhaar-card-number-input" value="${allRiders[el].Aadhar}" name="aadhar" placeholder="Adhaar Card Number" required> </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-6"> <label>PAN:</label> <input type="text" class="form-control pan-number-input" value="${allRiders[el].PAN}" name="pan" placeholder="PAN Number" required> </div>
-                                    <div class="col-md-6"> <label>Vehicle Registration Number:</label> <input type="text" class="form-control vehicle-registration-input" name="vrn" value="${allRiders[el].Vehicle_Registration_Number}" placeholder="Vehicle Registration Number " required> </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-6"> <label>License:</label> <input type="text" class="form-control license-input" value="${allRiders[el].License}" name="lf" placeholder="License Number" required> </div>
-                                    <div class="col-md-6"> <label>Profile Image:</label> <input type="file" class="form-control profile-image-input" name="riderimage" placeholder="Profile Image"> </div>
-                                </div>
-                            </div>
-                            <div id="step" class="">
-                            <div class="my-3" href="#step-3">Step 3:  <small>Bank Info</small></div>
-                                <div class="row">
-                                    <div class="col-md-6"> <label>Account Name:</label> <input type="text" class="form-control account-holder-name-input" name="ahname" value="${allRiders[el].BANK? allRiders[el].BANK.Account_Holder_Name: ''}"  placeholder="Account Holder Name" > </div>
-                                    <div class="col-md-6"> <label>Account Number:</label> <input type="text" class="form-control account-holder-number-input" name="ahnum" value="${allRiders[el].BANK? allRiders[el].BANK.Account_Number: ''}" placeholder="Account Holder Number" > </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-6"> <label>IFSC Code:</label> <input type="text" class="form-control ifsc-code-input" name="ifsccode" value="${allRiders[el].BANK? allRiders[el].BANK.IFSC_Code: ''}" placeholder="IFSC Code" > </div>
-                                    <div class="col-md-6"> <label>Branch Name:</label> <input type="text" class="form-control branch-name-input" name="bn" value="${allRiders[el].BANK? allRiders[el].BANK.Branch_Name: ''}" placeholder="Branch Name" > </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col"> <label>UPI Id:</label> <input type="text" class="form-control upi-id-input" name="upicode" value="${allRiders[el].BANK? allRiders[el].BANK.UPI_ID: ''}" placeholder="UPI ID" > </div>
-                                </div>
-                                <div class="col-md-12 text-center mt-4" >
-                                         <span>
-                                    <button type="submit" href="#" class="btn btn-success btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-check"></i>
-                                        </span>
-                                        <span class="text">Confirm Editing The Rider</span>
-                                    </button>
-                                    <span  data-dismiss="modal" aria-label="Close" class="hide-${el.replace('+', '')} hidden" >hide</span>
-                                            </span> 
-                                        </div>
-                            </div>
-
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>`
+       
 
 
 
